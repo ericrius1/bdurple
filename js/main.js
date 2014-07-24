@@ -1,5 +1,5 @@
 
-var scene, camera, controls, renderer, canvas;
+var scene, camera, controls, renderer, text;
 
 
 init();
@@ -16,19 +16,8 @@ function init() {
 
   document.body.appendChild(renderer.domElement);
 
-   var wordGeo = new THREE.TextGeometry('Peace', {
-      size: 50,
-      height: 5,
-      curveSegments: 8,
-      font: 'helvetiker'
-    });
+  text = new Text();
 
-
-    wordGeo.computeVertexNormals();
-    wordGeo.computeBoundingBox();
-
-    var word = new THREE.Mesh(wordGeo);
-    scene.add(word);
 
 
 }
@@ -37,6 +26,7 @@ function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     controls.update();
+    text.update();
 }
 
 // handle resizing windows
