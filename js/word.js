@@ -1,6 +1,7 @@
 var randFloat = THREE.Math.randFloat;
 var Text = function() {
-
+  var curPointIndex = 0;
+  var emitters  = [];
 
   var wordGeo = new THREE.TextGeometry('Peace', {
     size: 10,
@@ -24,28 +25,28 @@ var Text = function() {
   });
 
   var emitterParams = {
+    position: new THREE.Vector3(0, 30, 0),
     accelerationSpread: new THREE.Vector3(2, 2, 2)
   }
 
   createEmitterPoints();
-
-  var creatureEmitter = new SPE.Emitter({
-    position: new THREE.Vector3(10, 30, 0),
-    acceleration: new THREE.Vector3(0, -10, 0),
-    accelerationSpread: new THREE.Vector3(10, 0,0),
-    particleCount: 1000,
-    opacityEnd: 1
-  });
-  particleGroup.addEmitter(creatureEmitter);
   
   word.add(particleGroup.mesh);
+  findTarget();
 
   function createEmitterPoints(){
     for(var i = 0; i < wordPoints.length; i++){
       var emitter = new SPE.Emitter(emitterParams);
-      emitter.position = wordPoints[i];
+      emitters.push(emitter);
+      // emitter.position = wordPoints[i];
       particleGroup.addEmitter(emitter);
     }
+  }
+
+  function findTarget(){
+    var emitter = 
+
+
   }
 
   this.update = function(){
