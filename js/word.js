@@ -3,45 +3,53 @@ var Text = function() {
 
 
   var wordGeo = new THREE.TextGeometry('Peace', {
-    size: 50,
-    height: 5,
+    size: 10,
+    height: 1,
     curveSegments: 8,
-    font: 'helvetiker'
+    font: 'josefin slab'
   });
+
+  var anchor = new THREE.Object3D();
   var word = new THREE.Mesh(wordGeo);
-  word.position.x -=100;
-  scene.add(word);
+  word.position.x -=10;
+  scene.add(anchor)
+  anchor.add(word)
+  word.visible = false;
 
-  var wordPoints = THREE.GeometryUtils.randomPointsInGeometry(wordGeo, 1000);
+  var wordPoints = THREE.GeometryUtils.randomPointsInGeometry(wordGeo, 500);
 
-  var wordParticleGroup = new SPE.Group({
+  var particleGroup = new SPE.Group({
     texture: THREE.ImageUtils.loadTexture('assets/star.png'),
-    maxAge: 40
+    maxAge: 4
   });
 
   var emitterParams = {
-    sizeStart: 20,
-    accelerationSpread: new THREE.Vector3(10, 10, 10)
+    accelerationSpread: new THREE.Vector3(2, 2, 2)
   }
 
   createEmitterPoints();
-  word.add(wordParticleGroup.mesh);
 
-  var shnur = "WTF";
+  var creatureEmitter = new SPE.Emitter({
+    position: new THREE.Vector3(10, 30, 0),
+    acceleration: new THREE.Vector3(0, -10, 0),
+    accelerationSpread: new THREE.Vector3(10, 0,0),
+    particleCount: 1000,
+    opacityEnd: 1
+  });
+  particleGroup.addEmitter(creatureEmitter);
+  
+  word.add(particleGroup.mesh);
 
   function createEmitterPoints(){
     for(var i = 0; i < wordPoints.length; i++){
       var emitter = new SPE.Emitter(emitterParams);
       emitter.position = wordPoints[i];
-      wordParticleGroup.addEmitter(emitter);
+      particleGroup.addEmitter(emitter);
     }
   }
 
   this.update = function(){
-    word.rotation.y += .01;
-    wordParticleGroup.tick();
+    particleGroup.tick();
   }
 
-  // wordGeo.computeVertexNormals();
-  // wordGeo.computeBoundingBox();
 }

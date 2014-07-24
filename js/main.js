@@ -1,12 +1,12 @@
 
 var scene, camera, controls, renderer, text;
 
-
+//fly though field of peace words and peaceful figures
 init();
 animate();
 function init() {
-  camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 2000);
-  camera.position.z = 400;
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 20000);
+  camera.position.z = 50;
   scene = new THREE.Scene();
 
   controls = new THREE.OrbitControls(camera);
