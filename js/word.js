@@ -30,28 +30,25 @@ var Text = function() {
   });
 
   var wordContainer = new THREE.Object3D();
-  wordContainer.position.x -= 8;
+  wordContainer.position.x -= 6.5;
+  scene.add(wordContainer)
 
   var shalomWord = new THREE.Mesh(shalomGeo);
-  scene.add(wordContainer)
   wordContainer.add(shalomWord)
 
-  var salaamWord = new THREE.Mesh(shalomGeo);
-  scene.add(wordContainer)
+  var salaamWord = new THREE.Mesh(salaamGeo);
   wordContainer.add(salaamWord)
+
 
   var peaceWord = new THREE.Mesh(peaceGeo);
   wordContainer.add(peaceWord)
-  scene.add(wordContainer)
 
-  peaceWord.translateX(5);
-
+  var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
   var shalomPoints = THREE.GeometryUtils.randomPointsInGeometry(shalomGeo, numEmitters);
   var salaamPoints = THREE.GeometryUtils.randomPointsInGeometry(salaamGeo, numEmitters);
-  var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
   targets.push(peacePoints, shalomPoints, salaamPoints);
 
-  // wordContainer.remove(peaceWord)
+  wordContainer.remove(peaceWord)
   wordContainer.remove(shalomWord)
   wordContainer.remove(salaamWord)
 
@@ -107,7 +104,7 @@ var Text = function() {
 
     var moveTween = new TWEEN.Tween(curPos).
     to(targetPos, targetFindTime).
-    easing(TWEEN.Easing.Cubic.Out).
+    easing(TWEEN.Easing.Cubic.InOut).
     onUpdate(function() {
       emitter.position.set(curPos.x, curPos.y, curPos.z);
     }).start();
