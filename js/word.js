@@ -3,7 +3,7 @@ var Text = function() {
   var curEmitterIndex = 0;
   var emitters = [];
   var targets = [];
-  var numEmitters = 1000;
+  var numEmitters = 500;
   var curTargetIndex = 0;
 
   var shalomGeo = new THREE.TextGeometry('Shalom', {
@@ -20,9 +20,16 @@ var Text = function() {
     font: 'josefin slab'
   });
 
+  var peaceGeo = new THREE.TextGeometry('Peace', {
+    size: 4,
+    height: 1,
+    curveSegments: 6,
+    font: 'josefin slab'
+  });
+
   var wordContainer = new THREE.Object3D();
   wordContainer.position.x -= 8;
-  
+
   var shalomWord = new THREE.Mesh(shalomGeo);
   scene.add(wordContainer)
   wordContainer.add(shalomWord)
@@ -33,16 +40,22 @@ var Text = function() {
   wordContainer.add(salaamWord)
   salaamWord.visible = false;
 
+  var peaceWord = new THREE.Mesh(peaceGeo);
+  scene.add(wordContainer)
+  wordContainer.add(peaceWord)
+  peaceWord.visible = false;
+
   var shalomPoints = THREE.GeometryUtils.randomPointsInGeometry(shalomGeo, numEmitters);
   var salaamPoints = THREE.GeometryUtils.randomPointsInGeometry(salaamGeo, numEmitters);
-  targets.push(shalomPoints, salaamPoints);
+  var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
+  targets.push(shalomPoints, salaamPoints, peacePoints);
 
   var particleGroup = new SPE.Group({
     texture: THREE.ImageUtils.loadTexture('assets/star.png'),
     maxAge: 2
   });
   createEmitterPoints();
-  shalomWord.add(particleGroup.mesh);
+  wordContainer.add(particleGroup.mesh);
   setEmitterTargets(targets[curTargetIndex]);
   findTarget();
 
@@ -85,29 +98,32 @@ var Text = function() {
     }
 
     var moveTween = new TWEEN.Tween(curPos).
-    to(targetPos, 10000).
+    to(targetPos, 1000).
     onUpdate(function() {
       emitter.position.set(curPos.x, curPos.y, curPos.z);
     }).start();
 
     setTimeout(function() {
-      curEmitterIndex++;
       //Make sure we change emitter targets once we finish the transition
-      if(curEmitterIndex === emitters.length){
+      if (++curEmitterIndex === emitters.length) {
         curEmitterIndex = 0;
-        if(curTargetIndex === targets.length){
+        if (++curTargetIndex === targets.length) {
           curTargetIndex = 0;
         }
         setEmitterTargets(targets[curTargetIndex]);
-      }
-      else{
+        //wait a while then switch to new targets
+        setTimeout(function() {
+          console.log('find new target!')
+          findTarget();
+        }, 2000)
+      } else {
         findTarget()
       }
-    }, 10)
-}
+    }, 2)
+  }
 
-this.update = function() {
-  particleGroup.tick();
-}
+  this.update = function() {
+    particleGroup.tick();
+  }
 
 }
