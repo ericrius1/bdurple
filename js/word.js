@@ -1,6 +1,6 @@
 var randFloat = THREE.Math.randFloat;
 var Text = function() {
-  var curPointIndex = 0;
+  var curEmitterIndex = 0;
   var emitters  = [];
 
   var wordGeo = new THREE.TextGeometry('Peace', {
@@ -38,13 +38,37 @@ var Text = function() {
     for(var i = 0; i < wordPoints.length; i++){
       var emitter = new SPE.Emitter(emitterParams);
       emitters.push(emitter);
-      // emitter.position = wordPoints[i];
+      emitter.targetPosition = wordPoints[i];
       particleGroup.addEmitter(emitter);
     }
   }
 
   function findTarget(){
-    var emitter = 
+    var emitter = emitters[curEmitterIndex];
+
+    var curPos = {
+      x: emitter.position.x,
+      y: emitter.position.y,
+      z: emitter.position.z,
+    }
+
+    var targetPos = {
+      x: emitter.targetPosition.x,
+      y: emitter.targetPosition.y,
+      z: emitter.targetPosition.z,
+
+    }
+
+    var moveTween = new TWEEN.Tween(curPos).
+      to(targetPos, 1000).
+      onUpdate(function(){
+        emitter.position.set(curPos.x, curPos.y, curPos.z);
+      }).start();
+    moveTween.onComplete(function(){
+      if(curEmitterIndex++ < emitters.length){
+        findTarget();
+      }
+    })
 
 
   }

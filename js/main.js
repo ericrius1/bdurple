@@ -1,9 +1,16 @@
 
-var scene, camera, controls, renderer, text;
+var scene, camera, controls, renderer, text, shaders, clock;
 
-//fly though field of peace words and peaceful figures
-init();
-animate();
+shaders = new ShaderLoader('shaders');
+shaders.shaderSetLoaded = function(){
+    init();
+    animate();
+}
+
+shaders.load('vs-butterfly', 'butterfly', 'vertex');
+shaders.load('fs-butterfly','butterfly', 'fragment');
+
+
 function init() {
   camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 20000);
   camera.position.z = 50;
@@ -16,17 +23,21 @@ function init() {
 
   document.body.appendChild(renderer.domElement);
 
-  text = new Text();
+  clock = new THREE.Clock();
+  // text = new Text();
+  butterfly = new Butterfly();
 
 
 
 }
 
+
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    TWEEN.update();
     controls.update();
-    text.update();
+    // text.update();
 }
 
 // handle resizing windows
