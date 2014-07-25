@@ -3,8 +3,10 @@ var Text = function() {
   var curEmitterIndex = 0;
   var emitters = [];
   var targets = [];
-  var numEmitters = 500;
+  var numEmitters = 700;
   var curTargetIndex = 0;
+  var targetFindTime = 10000;
+  var wordTransitionTime = 5000
 
   var shalomGeo = new THREE.TextGeometry('Shalom', {
     size: 4,
@@ -33,22 +35,25 @@ var Text = function() {
   var shalomWord = new THREE.Mesh(shalomGeo);
   scene.add(wordContainer)
   wordContainer.add(shalomWord)
-  shalomWord.visible = false;
 
   var salaamWord = new THREE.Mesh(shalomGeo);
   scene.add(wordContainer)
   wordContainer.add(salaamWord)
-  salaamWord.visible = false;
 
   var peaceWord = new THREE.Mesh(peaceGeo);
-  scene.add(wordContainer)
   wordContainer.add(peaceWord)
-  peaceWord.visible = false;
+  scene.add(wordContainer)
+
+  peaceWord.translateX(5);
 
   var shalomPoints = THREE.GeometryUtils.randomPointsInGeometry(shalomGeo, numEmitters);
   var salaamPoints = THREE.GeometryUtils.randomPointsInGeometry(salaamGeo, numEmitters);
   var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
-  targets.push(shalomPoints, salaamPoints, peacePoints);
+  targets.push(peacePoints, shalomPoints, salaamPoints);
+
+  // wordContainer.remove(peaceWord)
+  wordContainer.remove(shalomWord)
+  wordContainer.remove(salaamWord)
 
   var particleGroup = new SPE.Group({
     texture: THREE.ImageUtils.loadTexture('assets/star.png'),
@@ -64,7 +69,10 @@ var Text = function() {
   function getEmitterParams() {
     return {
       position: new THREE.Vector3(0, 30, 0),
-      accelerationSpread: new THREE.Vector3(.1, .1, .1)
+      acceleration: new THREE.Vector3(-.2, 0, -0.2),
+      accelerationSpread: new THREE.Vector3(.2, .2, .2),
+      colorStart: new THREE.Color(0xff0000),
+      colorEnd: new THREE.Color(0x0000ff)
     }
   }
 
@@ -98,7 +106,8 @@ var Text = function() {
     }
 
     var moveTween = new TWEEN.Tween(curPos).
-    to(targetPos, 1000).
+    to(targetPos, targetFindTime).
+    easing(TWEEN.Easing.Cubic.Out).
     onUpdate(function() {
       emitter.position.set(curPos.x, curPos.y, curPos.z);
     }).start();
@@ -115,7 +124,7 @@ var Text = function() {
         setTimeout(function() {
           console.log('find new target!')
           findTarget();
-        }, 2000)
+        }, targetFindTime + wordTransitionTime)
       } else {
         findTarget()
       }

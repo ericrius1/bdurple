@@ -13,7 +13,7 @@ var Statue = function() {
     particleCount: 10000,
     velocitySpread: new THREE.Vector3(.1, .1, .1),
     colorStart: new THREE.Color(0x0002fb),
-    colorMiddle: new THREE.Color(0xff0000),
+    colorMiddle: new THREE.Color(0x089201),
   });
   var radius = 11
   var speed = .7;
@@ -37,7 +37,7 @@ var Statue = function() {
     });
 
     var height = radius * 2;
-    var peaceGeo = new THREE.PlaneGeometry(80, 80);
+    var peaceGeo = new THREE.PlaneGeometry(111, 111);
     peaceRug = new THREE.Mesh(peaceGeo, peaceMaterial);
     peaceRug.rotation.x = -Math.PI/2;
     peaceRug.position.y = -radius - 2;
