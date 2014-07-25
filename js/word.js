@@ -24,9 +24,11 @@ var Text = function() {
     maxAge: 4
   });
 
-  var emitterParams = {
-    position: new THREE.Vector3(0, 30, 0),
-    accelerationSpread: new THREE.Vector3(2, 2, 2)
+  function getEmitterParams(){
+    return {
+      position: new THREE.Vector3(0, 30, 0),
+      accelerationSpread: new THREE.Vector3(2, 2, 2)
+    }
   }
 
   createEmitterPoints();
@@ -36,7 +38,7 @@ var Text = function() {
 
   function createEmitterPoints(){
     for(var i = 0; i < wordPoints.length; i++){
-      var emitter = new SPE.Emitter(emitterParams);
+      var emitter = new SPE.Emitter(getEmitterParams());
       emitters.push(emitter);
       emitter.targetPosition = wordPoints[i];
       particleGroup.addEmitter(emitter);
@@ -60,7 +62,7 @@ var Text = function() {
     }
 
     var moveTween = new TWEEN.Tween(curPos).
-      to(targetPos, 1000).
+      to(targetPos, 100).
       onUpdate(function(){
         emitter.position.set(curPos.x, curPos.y, curPos.z);
       }).start();
