@@ -2,8 +2,7 @@ var scene, camera, controls, renderer, text, shaders, clock, statue, time;
 
 shaders = new ShaderLoader('shaders');
 shaders.shaderSetLoaded = function() {
-  init();
-  animate();
+
   var audio = loadAudio('assets/splendor.mp3');
 }
 
@@ -61,6 +60,8 @@ function loadAudio(uri) {
   var audio = new Audio();
   audio.addEventListener('canplaythrough', function() {
     this.play();
+    init();
+    animate();
   }, false);
   audio.src = uri;
   return audio;
