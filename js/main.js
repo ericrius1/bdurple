@@ -1,5 +1,5 @@
 
-var scene, camera, controls, renderer, text, shaders, clock, statue;
+var scene, camera, controls, renderer, text, shaders, clock, statue, time;
 
 shaders = new ShaderLoader('shaders');
 shaders.shaderSetLoaded = function(){
@@ -7,8 +7,8 @@ shaders.shaderSetLoaded = function(){
     animate();
 }
 
-shaders.load('vs-butterfly', 'butterfly', 'vertex');
-shaders.load('fs-butterfly','butterfly', 'fragment');
+shaders.load('vs-peace', 'peace', 'vertex');
+shaders.load('fs-peace','peace', 'fragment');
 
 
 function init() {
@@ -35,6 +35,7 @@ function init() {
 
 
 function animate() {
+    time = clock.getElapsedTime();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     TWEEN.update();
