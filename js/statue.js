@@ -1,5 +1,5 @@
 var Statue = function() {
-  var peaceLines;
+  var peaceMaterial;
   var particleGroup = new SPE.Group({
     texture: new THREE.ImageUtils.loadTexture('assets/point.png'),
     maxAge: 11,
@@ -13,7 +13,7 @@ var Statue = function() {
     particleCount: 10000,
     velocitySpread: new THREE.Vector3(.1, .1, .1),
     colorStart: new THREE.Color(0x0002fb),
-    colorMiddle: new THREE.Color(0x089201),
+    colorMiddle: new THREE.Color(0xff0000),
   });
   var radius = 11
   var speed = .7;
@@ -30,17 +30,18 @@ var Statue = function() {
         value: 1.0
       },
     }
-    peaceMat = new THREE.ShaderMaterial({
+    peaceMaterial = new THREE.ShaderMaterial({
       uniforms: uniforms,
       vertexShader: shaders.vertexShaders.peace,
       fragmentShader: shaders.fragmentShaders.peace,
     });
 
     var height = radius * 2;
-    var peaceGeo = new THREE.PlaneGeometry(2, radius* 2);
-    peaceLines = new THREE.Mesh(peaceGeo, peaceMat);
-    peaceLines.position.y += radius - height / 2;
-    scene.add(peaceLines);
+    var peaceGeo = new THREE.PlaneGeometry(80, 80);
+    peaceRug = new THREE.Mesh(peaceGeo, peaceMaterial);
+    peaceRug.rotation.x = -Math.PI/2;
+    peaceRug.position.y = -radius - 2;
+    scene.add(peaceRug);
 
 
   }
@@ -49,7 +50,7 @@ var Statue = function() {
     circleEmitter.position.x = radius * Math.cos(-time * speed);
     circleEmitter.position.y = radius * Math.sin(-time * speed);
     particleGroup.tick();
-    peaceLines.material.uniforms.time.value = time * .05;
+    peaceMaterial.uniforms.time.value = time * .05;
   }
 
 }

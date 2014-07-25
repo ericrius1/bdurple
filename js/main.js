@@ -18,15 +18,14 @@ function init() {
 
   controls = new THREE.OrbitControls(camera);
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(0xffffff);
+  renderer = new THREE.WebGLRenderer({antialias: true});
+  // renderer.setClearColor(0xffffff);
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   document.body.appendChild(renderer.domElement);
 
   clock = new THREE.Clock();
   text = new Text();
-  // butterfly = new Butterfly();
   statue = new Statue();
 
 
@@ -41,8 +40,7 @@ function animate() {
     TWEEN.update();
     controls.update();
     statue.update();
-    // butterfly.update();
-    // text.update();
+    text.update();
 }
 
 // handle resizing windows
