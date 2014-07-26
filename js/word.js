@@ -7,7 +7,9 @@ var Text = function() {
   var curTargetIndex = 0;
   var targetFindTime = 10000;
   var wordTransitionTime = 5000
-
+  var targetIntervalTime = 1111;
+  var minTargetIntervalTime = 11;
+  var targetIntegralDecremenetFactor = 1.05;
   var shalomGeo = new THREE.TextGeometry('Shalom', {
     size: 4,
     height: 1,
@@ -68,8 +70,9 @@ var Text = function() {
       position: new THREE.Vector3(0, 30, 0),
       acceleration: new THREE.Vector3(-.2, 0, -0.2),
       accelerationSpread: new THREE.Vector3(.2, .2, .2),
-      colorStart: new THREE.Color(0xff0000),
-      colorEnd: new THREE.Color(0x0000ff)
+      colorStart: new THREE.Color(0xe48d24),
+      colorMiddle: new THREE.Color(0x9d540f),
+      particleCount: 100
     }
   }
 
@@ -110,6 +113,10 @@ var Text = function() {
     }).start();
 
     setTimeout(function() {
+      if(targetIntervalTime > minTargetIntervalTime){
+        targetIntervalTime/=targetIntegralDecremenetFactor;
+      }
+
       //Make sure we change emitter targets once we finish the transition
       if (++curEmitterIndex === emitters.length) {
         curEmitterIndex = 0;
@@ -124,7 +131,7 @@ var Text = function() {
       } else {
         findTarget()
       }
-    }, 2)
+    }, targetIntervalTime)
   }
 
   this.update = function() {
