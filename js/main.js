@@ -2,12 +2,21 @@ var scene, camera, controls, renderer, text, shaders, clock, statue, time;
 
 shaders = new ShaderLoader('shaders');
 shaders.shaderSetLoaded = function() {
-
-  var audio = loadAudio('assets/splendor.mp3');
+  init();
+  animate();
 }
 
 shaders.load('vs-peace', 'peace', 'vertex');
 shaders.load('fs-peace', 'peace', 'fragment');
+
+if(SC){
+  SC.initialize({
+    client_id: "7265905d50a4ae541fd4219bc9b2b0db",
+  });
+}
+SC.stream("/tracks/sacral-nirvana-oliver-shanti", function(song) {
+  song.play();
+})
 
 
 function init() {
@@ -28,11 +37,7 @@ function init() {
   clock = new THREE.Clock();
   text = new Text();
   statue = new Statue();
-
-
-
 }
-
 
 function animate() {
   time = clock.getElapsedTime();
@@ -53,16 +58,4 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-}
-
-
-function loadAudio(uri) {
-  var audio = new Audio();
-  audio.addEventListener('canplaythrough', function() {
-    this.play();
-    init();
-    animate();
-  }, false);
-  audio.src = uri;
-  return audio;
 }

@@ -30,7 +30,7 @@ var Text = function() {
   });
 
   var wordContainer = new THREE.Object3D();
-  wordContainer.position.x -= 6.5;
+  wordContainer.position.x -= 8.0;
   scene.add(wordContainer)
 
   var shalomWord = new THREE.Mesh(shalomGeo);
@@ -46,7 +46,7 @@ var Text = function() {
   var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
   var shalomPoints = THREE.GeometryUtils.randomPointsInGeometry(shalomGeo, numEmitters);
   var salaamPoints = THREE.GeometryUtils.randomPointsInGeometry(salaamGeo, numEmitters);
-  targets.push(peacePoints, shalomPoints, salaamPoints);
+  targets.push(shalomPoints, salaamPoints, peacePoints);
 
   wordContainer.remove(peaceWord)
   wordContainer.remove(shalomWord)
@@ -119,7 +119,6 @@ var Text = function() {
         setEmitterTargets(targets[curTargetIndex]);
         //wait a while then switch to new targets
         setTimeout(function() {
-          console.log('find new target!')
           findTarget();
         }, targetFindTime + wordTransitionTime)
       } else {
