@@ -46,7 +46,7 @@ var Text = function() {
   var peacePoints = THREE.GeometryUtils.randomPointsInGeometry(peaceGeo, numEmitters);
   var shalomPoints = THREE.GeometryUtils.randomPointsInGeometry(shalomGeo, numEmitters);
   var salaamPoints = THREE.GeometryUtils.randomPointsInGeometry(salaamGeo, numEmitters);
-  targets.push(shalomPoints, salaamPoints, peacePoints);
+  targets.push(salaamPoints, shalomPoints, peacePoints);
 
   wordContainer.remove(peaceWord)
   wordContainer.remove(shalomWord)
