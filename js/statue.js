@@ -10,7 +10,7 @@ var Statue = function() {
     accelerationSpread: new THREE.Vector3(.01, .01, .01),
     positionSpread: new THREE.Vector3(0.2, 0.2, 0.2),
     opacityMiddle: 1,
-    particleCount: 10000,
+    particleCount: 7000,
     velocitySpread: new THREE.Vector3(.1, .1, .1),
     colorStart: new THREE.Color(0x0002fb),
     colorMiddle: new THREE.Color(0x089201),

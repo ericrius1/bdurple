@@ -3,16 +3,16 @@ var Text = function() {
   var curEmitterIndex = 0;
   var emitters = [];
   var targets = [];
-  var numEmitters = 700;
+  var numEmitters = 811;
   var curTargetIndex = 0;
-  var targetFindTime = 10000;
+  var targetFindTime = 11111;
   var wordTransitionTime = 5000
   var targetIntervalTime = 1111;
   var minTargetIntervalTime = 11;
   var targetIntegralDecremenetFactor = 1.05;
   var shalomGeo = new THREE.TextGeometry('Shalom', {
     size: 4,
-    height: 1,
+    height: .1,
     curveSegments: 6,
     font: 'josefin slab'
   });
@@ -56,7 +56,7 @@ var Text = function() {
 
   var particleGroup = new SPE.Group({
     texture: THREE.ImageUtils.loadTexture('assets/star.png'),
-    maxAge: 2
+    maxAge: 2,
   });
   createEmitterPoints();
   wordContainer.add(particleGroup.mesh);
@@ -72,7 +72,8 @@ var Text = function() {
       accelerationSpread: new THREE.Vector3(.2, .2, .2),
       colorStart: new THREE.Color(0xe48d24),
       colorMiddle: new THREE.Color(0x9d540f),
-      particleCount: 100
+      opacityMiddle: 1,
+      particleCount: 60
     }
   }
 
