@@ -9,14 +9,6 @@ shaders.shaderSetLoaded = function() {
 shaders.load('vs-peace', 'peace', 'vertex');
 shaders.load('fs-peace', 'peace', 'fragment');
 
-if(SC){
-  SC.initialize({
-    client_id: "7265905d50a4ae541fd4219bc9b2b0db",
-  });
-}
-SC.stream("/tracks/sacral-nirvana-oliver-shanti", function(song) {
-  song.play();
-})
 
 
 function init() {
